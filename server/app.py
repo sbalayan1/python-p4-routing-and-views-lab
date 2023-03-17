@@ -13,22 +13,27 @@ def print_route():
     print("hello")
     return "hello"
 
-@app.route('/count/<num>')
+@app.route('/count/<int:num>')
 def count(num):
     res = ""
-    for n in range(0, int(num)):
+    for n in range(0, num):
         res += str(n) + "\n"
     
     return res
 
-@app.route('/math/<op>')
-def math(op):
-    if "div" in op:
-        nums = op.split('div')
-        res = int(nums[0]) / int(nums[1])
-        return str(res)
+@app.route('/math/<int:num1><string:op><int:num2>')
+def math(num1, op, num2):
+    if op == "div":
+        return str(num1/num2)
+    if op == "+":
+        return str(num1 + num2)
+    if op == "-":
+        return str(num1 - num2)
+    if op == "%":
+        return str(num1 % num2)
     
-    return str(eval(op))
+    if op == "*":
+        return str(num1 * num2)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
